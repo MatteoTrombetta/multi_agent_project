@@ -1,7 +1,6 @@
 # Project outline
 Un sistema "Multi-Agent" in Python, focalizzato sull'automazione della ricerca e dell'analisi dati (es. un Agente che cerca sul web tramite API, un Agente che analizza, un Agente che redige un report).
 
-
 Il nostro sistema sarà un grafo diretto. Ogni agente sarà un nodo del grafo che riceve lo stato, compie un'azione (o usa un tool), aggiorna lo stato e lo passa al nodo successivo.
 
 Concettualmente, avremo bisogno di questa struttura OOP:
