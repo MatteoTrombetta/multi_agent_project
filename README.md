@@ -3,7 +3,7 @@ Un sistema "Multi-Agent" in Python, focalizzato sull'automazione della ricerca e
 
 Il nostro sistema sarà un grafo diretto. Ogni agente sarà un nodo del grafo che riceve lo stato, compie un'azione (o usa un tool), aggiorna lo stato e lo passa al nodo successivo.
 
-Concettualmente, avremo bisogno di questa struttura OOP:
+Struttura OOP:
 
 Lo Stato (State): Un oggetto (spesso una TypedDict o un modello Pydantic) che viaggia tra gli agenti. Conterrà la query iniziale, la lista dei documenti trovati, le analisi intermedie e il report finale.
 
@@ -29,11 +29,10 @@ multi_agent_project/
     ├── tools/            # Strumenti esterni (ricerca web, I/O file)
     └── graph.py          # La logica di orchestrazione (nodi e archi di LangGraph)
 
-    Per iniziare a sporcarti le mani, prepara il tuo ambiente virtuale (venv o conda) e registra questi account gratuiti (o a basso costo) per recuperare le API key da inserire nel tuo file .env:
 
-OpenAI API: Utilizzeremo gpt-4o-mini (economico e veloce) o gpt-4o per il function calling. OpenAI rimane lo standard industriale di riferimento per la stabilità degli agenti che devono chiamare funzioni.
+Utilizzeremo gpt-4o-mini (economico e veloce) o gpt-4o per il function calling. OpenAI rimane lo standard industriale di riferimento per la stabilità degli agenti che devono chiamare funzioni.
 
-Tavily API: Tavily è un motore di ricerca progettato specificamente per gli LLM e gli agenti AI. A differenza di una normale API di Google, non restituisce solo link, ma estrae già il contenuto rilevante dalle pagine in modo pulito. È perfetto per il nostro ResearcherAgent.
+Tavily API: Tavily è un motore di ricerca progettato specificamente per gli LLM e gli agenti AI. A differenza di una normale API di Google, non restituisce solo link, ma estrae già il contenuto rilevante dalle pagine in modo pulito.
 
 Librerie Base (requirements.txt):
 - langchain-core
@@ -42,3 +41,4 @@ Librerie Base (requirements.txt):
 - tavily-python
 - python-dotenv
 - pydantic (per la validazione rigorosa dei dati e del function calling)
+- langchain

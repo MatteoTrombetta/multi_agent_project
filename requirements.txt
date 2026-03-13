@@ -4,3 +4,4 @@ langchain-openai
 langgraph
 tavily-python
 pydantic
+langchain
