@@ -7,11 +7,13 @@ from langchain_core.messages import AnyMessage
 from src.agents.researcher import ResearcherAgent
 
 
+# shouldn't be here
 @tool
 def search(state): # dummy tool for checking whether APIs work
     """Function that through API calls search on the web and retrieves data"""
     messages = state["chronology"]
     return 
+
 
 def analyze(state):
     return None
@@ -38,7 +40,7 @@ class MultiAgentGraph:
         self.builder = StateGraph(State)
         self.research_agent = ResearcherAgent()
 
-        self.builder.add_node("researcher", self.research_agent.run) # this way LangGraph will call "run(state)" from the agent each time the flow reach this node 
+        self.builder.add_node("researcher", self.research_agent.run) # this way LangGraph will call "run(state)" from the agent each time the flow reaches this node 
         self.builder.add_node("analyzer", analyze)
         self.builder.add_node("writer", write)
         self.builder.add_node("tool", call)
