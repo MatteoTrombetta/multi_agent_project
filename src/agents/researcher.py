@@ -12,7 +12,6 @@ class ResearcherAgent:
         self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) #temp=0 ideal for agents
         self.llm_with_tools = self.llm.bind_tools([web_search.tavily_search]) #binding the tool from the library
 
-        # optional
         self.agent_prompt = f"""You are an experienced researcher. 
         You have to search for academic data and information online, 
         based on the topics you are asked to search for"""
