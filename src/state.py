@@ -8,17 +8,17 @@ import operator
 
 class State(TypedDict):
     """Class to define the structure of the State, uses TypedDict.
-    Necessary to use Annotated class in order to avoid overwriting."""
+    Necessary to use class Annotated in order to avoid overwriting."""
     initial_query: str
     graph_state: str # don't know if this is needed
     docs_found: Annotated[list[str], operator.add]
     raw_data: Annotated[list[dict], operator.add] #will be with smth like 'url', 'content'
     chronology: Annotated[list[AnyMessage], add_messages]
     something: NotRequired[str] #see if needs anything else
-    final_report: dict #let's keep it simple
+    final_report: str #let's keep it simple 
     research_steps: Annotated[int, lambda x, y: x+y] # custom reducer (TO CHECK)
     research_steps_old: int # to keep a counting of the steps performed reasearching
-
+    is_sufficient: bool = False #to say whether are needed new researches
     
 '''
 Node functions follow this pattern:

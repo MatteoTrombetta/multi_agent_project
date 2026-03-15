@@ -2,7 +2,7 @@ from langchain_core.tools import tool
 from tavily import TavilyClient
 import os
 
-tavily_client = TavilyClient(api_key=os.getenv("TAVILY_KEY")) 
+tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY")) 
 
 @tool
 def tavily_search(query: str) -> list[dict]:

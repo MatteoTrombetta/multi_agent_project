@@ -5,3 +5,4 @@ langgraph
 tavily-python
 pydantic
 langchain
+markdown
