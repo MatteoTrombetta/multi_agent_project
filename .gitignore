@@ -1,2 +1,20 @@
 .env
 .venv
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# IDE e Sistemi Operativi
+.vscode/
+.idea/
+.DS_Store
+
+# SECRETS
+.env
