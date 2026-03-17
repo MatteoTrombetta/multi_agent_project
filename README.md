@@ -1,4 +1,14 @@
 # Project outline
+
+Modular, stateful Multi-Agent workflow using Python and LangGraph to automate complex research tasks. The system features a cyclic state machine where a Researcher agent dynamically calls search tools (Tavily API), an Analyzer agent uses structured outputs (Pydantic) to evaluate data sufficiency (Reflection pattern), and a Writer agent drafts the final report. This project demonstrates practical expertise in modern LLM orchestration, Function Calling, and advanced prompt engineering beyond basic RAG implementations.
+
+
+A single LLM easily lose context and hallucinates, also is not able to do structured auto-correction. A Multi-Agent System divides the tasks (Separation of Concerns) and uses shared memory (the State) in order to iterate until the final result is solid.
+
+
+
+
+
 Un sistema "Multi-Agent" in Python, focalizzato sull'automazione della ricerca e dell'analisi dati (es. un Agente che cerca sul web tramite API, un Agente che analizza, un Agente che redige un report).
 
 Il nostro sistema sarà un grafo diretto. Ogni agente sarà un nodo del grafo che riceve lo stato, compie un'azione (o usa un tool), aggiorna lo stato e lo passa al nodo successivo.
@@ -17,7 +27,7 @@ I Tool (Tools): Classi o funzioni isolate (es. WebSearchTool, FileParserTool). D
 
 - **WriterAgent**: Prende gli insight e redige il report formale.
 
-
+```
 multi_agent_project/
 ├── .env                  # Variabili d'ambiente (API keys)
 ├── requirements.txt
@@ -28,6 +38,7 @@ multi_agent_project/
     ├── agents/           # Le classi per i vari agenti (Researcher, Analyzer, Writer)
     ├── tools/            # Strumenti esterni (ricerca web, I/O file)
     └── graph.py          # La logica di orchestrazione (nodi e archi di LangGraph)
+```
 
 
 Utilizzeremo gpt-4o-mini (economico e veloce) o gpt-4o per il function calling. OpenAI rimane lo standard industriale di riferimento per la stabilità degli agenti che devono chiamare funzioni.

@@ -18,20 +18,20 @@ class AnalyzerAgent:
         self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         self.structured_llm = self.llm.with_structured_output(LLMResponse)
 
-        self.agent_prompt = f"""You are an experienced analyzer. 
-        Your goal is to look at the data you received from the researcher
-        and query from the user to understand whether the information
-        is enough to answer to the user's query."""
+        self.agent_prompt = """You are an experienced analyzer. 
+        Your goal is to look at the data provided by the researcher and decide if it's enough to answer the user's query.
+        CRITICAL INSTRUCTION: You don't need a perfectly comprehensive encyclopedia. If the provided data contains at least 3-4 solid, relevant facts or recent developments that can form a good short report, you MUST output is_sufficient = True. 
+        Only output False if the data is completely irrelevant, completely empty, or completely misses the core of the user's question."""
 
     def run(self, state: State) -> dict:
-
+        print("[Analyzer] I'm evaluating the data...")    
         context = [
             SystemMessage(self.agent_prompt),
             HumanMessage(content=f"Original query from the user: {state["initial_query"]}")
-            ] + state["chronology"]
+            ] + state["messages"]
         answer = self.structured_llm.invoke(context)
         
         return {
-            "chronology": [AIMessage(content=answer.reasoning)],
+            "messages": [AIMessage(content=answer.reasoning)],
             "is_sufficient": answer.is_sufficient
         }

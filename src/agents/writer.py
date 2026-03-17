@@ -23,11 +23,11 @@ class WriterAgent:
         """
 
     def run(self, state: State) -> dict:
-        
+        print("[Writer] Sufficient data! I'm writing the report...")
         context = [
             SystemMessage(content=self.agent_prompt),
             HumanMessage(content=f"Original query from the user: {state["initial_query"]}")
-        ] + state["chronology"]
+        ] + state["messages"]
 
         answer = self.llm.invoke(context)
         return {

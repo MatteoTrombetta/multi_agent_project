@@ -13,7 +13,7 @@ class State(TypedDict):
     graph_state: str # don't know if this is needed
     docs_found: Annotated[list[str], operator.add]
     raw_data: Annotated[list[dict], operator.add] #will be with smth like 'url', 'content'
-    chronology: Annotated[list[AnyMessage], add_messages]
+    messages: Annotated[list[AnyMessage], add_messages]
     something: NotRequired[str] #see if needs anything else
     final_report: str #let's keep it simple 
     research_steps: Annotated[int, lambda x, y: x+y] # custom reducer (TO CHECK)

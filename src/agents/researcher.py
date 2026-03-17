@@ -12,13 +12,16 @@ class ResearcherAgent:
         self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) #temp=0 ideal for agents
         self.llm_with_tools = self.llm.bind_tools([web_search.tavily_search]) #binding the tool from the library
 
-        self.agent_prompt = f"""You are an experienced researcher. 
-        You have to search for academic data and information online, 
-        based on the topics you are asked to search for"""
+        self.agent_prompt = """You are an experienced researcher. 
+        You must search for academic data and information online based on the user's query.
+        CRITICAL INSTRUCTION: Before searching, ALWAYS read the conversation history. 
+        If you see that an Analyzer has previously rejected your research, READ THEIR REASONING carefully. 
+        DO NOT repeat the exact same search query. Formulate a NEW, more specific search query to find the exact missing information the Analyzer asked for."""
 
     def run(self, state: State) -> dict:
         # Giving context to the agent
-        context = [SystemMessage(content=self.agent_prompt)] + state["chronology"]
+        print("[Researcher] I'm looking for information...")
+        context = [SystemMessage(content=self.agent_prompt)] + state["messages"]
         answer = self.llm_with_tools.invoke(context)
-        return {"chronology": [answer]} # Remeber: by using [] you add the answer to the list!
+        return {"messages": [answer]} # Remeber: by using [] you add the answer to the list!
 
