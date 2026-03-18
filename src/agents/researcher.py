@@ -9,10 +9,10 @@ class ResearcherAgent:
     research tools and extract raw data and append them to State.
     It will use Tavily APIs"""
     def __init__(self):
-        self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) #temp=0 ideal for agents
-        self.llm_with_tools = self.llm.bind_tools([web_search.tavily_search]) #binding the tool from the library
+        self._llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) #temp=0 ideal for agents
+        self._llm_with_tools = self._llm.bind_tools([web_search.tavily_search]) #binding the tool from the library
 
-        self.agent_prompt = """You are an experienced researcher. 
+        self._agent_prompt = """You are an experienced researcher. 
         You must search for academic data and information online based on the user's query.
         CRITICAL INSTRUCTION: Before searching, ALWAYS read the conversation history. 
         If you see that an Analyzer has previously rejected your research, READ THEIR REASONING carefully. 
@@ -21,7 +21,7 @@ class ResearcherAgent:
     def run(self, state: State) -> dict:
         # Giving context to the agent
         print("[Researcher] I'm looking for information...")
-        context = [SystemMessage(content=self.agent_prompt)] + state["messages"]
-        answer = self.llm_with_tools.invoke(context)
+        context = [SystemMessage(content=self._agent_prompt)] + state["messages"]
+        answer = self._llm_with_tools.invoke(context)
         return {"messages": [answer]} # Remeber: by using [] you add the answer to the list!
 

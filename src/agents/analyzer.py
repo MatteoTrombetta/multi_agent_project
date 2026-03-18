@@ -15,10 +15,10 @@ class AnalyzerAgent:
     back the execution to the reasercher (keeping the cycle going)"""
     def __init__(self):
 
-        self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-        self.structured_llm = self.llm.with_structured_output(LLMResponse)
+        self._llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        self._structured_llm = self._llm.with_structured_output(LLMResponse)
 
-        self.agent_prompt = """You are an experienced analyzer. 
+        self._agent_prompt = """You are an experienced analyzer. 
         Your goal is to look at the data provided by the researcher and decide if it's enough to answer the user's query.
         CRITICAL INSTRUCTION: You don't need a perfectly comprehensive encyclopedia. If the provided data contains at least 3-4 solid, relevant facts or recent developments that can form a good short report, you MUST output is_sufficient = True. 
         Only output False if the data is completely irrelevant, completely empty, or completely misses the core of the user's question."""
@@ -26,10 +26,10 @@ class AnalyzerAgent:
     def run(self, state: State) -> dict:
         print("[Analyzer] I'm evaluating the data...")    
         context = [
-            SystemMessage(self.agent_prompt),
+            SystemMessage(self._agent_prompt),
             HumanMessage(content=f"Original query from the user: {state["initial_query"]}")
             ] + state["messages"]
-        answer = self.structured_llm.invoke(context)
+        answer = self._structured_llm.invoke(context)
         
         return {
             "messages": [AIMessage(content=answer.reasoning)],
