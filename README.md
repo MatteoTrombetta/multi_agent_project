@@ -1,3 +1,7 @@
+### NEW VERSION 2.0
+In this new branch we will focus on improving this project aiming to an enterprise-like structure.
+
+
 # Project outline
 
 Modular, stateful Multi-Agent workflow using Python and LangGraph to automate complex research tasks. The system features a cyclic state machine where a Researcher agent dynamically calls search tools (Tavily API), an Analyzer agent uses structured outputs (Pydantic) to evaluate data sufficiency (Reflection pattern), and a Writer agent drafts the final report. This project demonstrates practical expertise in modern LLM orchestration, Function Calling, and advanced prompt engineering beyond basic RAG implementations.
