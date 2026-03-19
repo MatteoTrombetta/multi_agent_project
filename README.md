@@ -10,9 +10,6 @@ Modular, stateful Multi-Agent workflow using Python and LangGraph to automate co
 A single LLM easily lose context and hallucinates, also is not able to do structured auto-correction. A Multi-Agent System divides the tasks (Separation of Concerns) and uses shared memory (the State) in order to iterate until the final result is solid.
 
 
-
-
-
 Un sistema "Multi-Agent" in Python, focalizzato sull'automazione della ricerca e dell'analisi dati (es. un Agente che cerca sul web tramite API, un Agente che analizza, un Agente che redige un report).
 
 Il nostro sistema sarà un grafo diretto. Ogni agente sarà un nodo del grafo che riceve lo stato, compie un'azione (o usa un tool), aggiorna lo stato e lo passa al nodo successivo.

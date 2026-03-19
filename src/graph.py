@@ -4,9 +4,7 @@ from typing import Literal
 from src.state import State
 from langgraph.prebuilt import ToolNode, tools_condition
 from src.tools.web_search import tavily_search
-from src.agents.analyzer import AnalyzerAgent
-from src.agents.researcher import ResearcherAgent
-from src.agents.writer import WriterAgent
+from src.agents.factory import AgentFactory
 
 
 tools_node = ToolNode(tools=[tavily_search])
@@ -18,9 +16,9 @@ def decide_sufficient(state) -> Literal["researcher", "writer"]:
 class MultiAgentGraph:
     def __init__(self):
         self.builder = StateGraph(State)
-        self.research_agent = ResearcherAgent()
-        self.analyzer_agent = AnalyzerAgent()
-        self.writer_agent = WriterAgent()
+        self.research_agent = AgentFactory.create("researcher")
+        self.analyzer_agent = AgentFactory.create("analyzer")
+        self.writer_agent = AgentFactory.create("writer")
 
         self.builder.add_node("researcher", self.research_agent.run) # this way LangGraph will call "run(state)" from the agent each time the flow reaches this node 
         self.builder.add_node("analyzer", self.analyzer_agent.run)
