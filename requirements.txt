@@ -6,3 +6,5 @@ tavily-python
 pydantic
 langchain
 markdown
+langchain-chroma
+chromadb
