@@ -1,12 +1,13 @@
+### NEW VERSION 2.0
+In this new branch we will focus on improving this project aiming to an enterprise-like structure.
+
+
 # Project outline
 
 Modular, stateful Multi-Agent workflow using Python and LangGraph to automate complex research tasks. The system features a cyclic state machine where a Researcher agent dynamically calls search tools (Tavily API), an Analyzer agent uses structured outputs (Pydantic) to evaluate data sufficiency (Reflection pattern), and a Writer agent drafts the final report. This project demonstrates practical expertise in modern LLM orchestration, Function Calling, and advanced prompt engineering beyond basic RAG implementations.
 
 
 A single LLM easily lose context and hallucinates, also is not able to do structured auto-correction. A Multi-Agent System divides the tasks (Separation of Concerns) and uses shared memory (the State) in order to iterate until the final result is solid.
-
-
-
 
 
 Un sistema "Multi-Agent" in Python, focalizzato sull'automazione della ricerca e dell'analisi dati (es. un Agente che cerca sul web tramite API, un Agente che analizza, un Agente che redige un report).

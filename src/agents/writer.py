@@ -9,10 +9,10 @@ class WriterAgent:
     
     def __init__(self):
         
-        self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.4) # 0.4 for a little bit of fluent speaking
+        self._llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.4) # 0.4 for a little bit of fluent speaking
 
         # Could be improved (also with images, graphs maybe)
-        self.agent_prompt = f"""You are an experienced report writer. You will write
+        self._agent_prompt = f"""You are an experienced report writer. You will write
         the report according to the information provided to you by a researcher and
         checked by an analyzer, following an initial query provided by the user. You will write your report in Markdown, clearly citing the
         sources and building it according to these sections:
@@ -25,11 +25,11 @@ class WriterAgent:
     def run(self, state: State) -> dict:
         print("[Writer] Sufficient data! I'm writing the report...")
         context = [
-            SystemMessage(content=self.agent_prompt),
+            SystemMessage(content=self._agent_prompt),
             HumanMessage(content=f"Original query from the user: {state["initial_query"]}")
         ] + state["messages"]
 
-        answer = self.llm.invoke(context)
+        answer = self._llm.invoke(context)
         return {
             "final_report": answer.content
         }

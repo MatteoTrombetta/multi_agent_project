@@ -19,5 +19,5 @@ env/
 # SECRETS
 .env
 
-# Chroma
+# Folders
 chroma_db/
