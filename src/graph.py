@@ -1,4 +1,3 @@
-"""Orchestration logic (arcs and nodes using LangGraph)"""
 from langgraph.graph import START, END, StateGraph
 from typing import Literal
 from src.state import State
@@ -6,10 +5,10 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from src.tools.web_search import tavily_search
 from src.agents.factory import AgentFactory
 from src.tools.company_knowledge import search_company_knowledge
+from langgraph.checkpoint.memory import MemorySaver
 
-my_tools = [tavily_search, search_company_knowledge]
-#tools_node = ToolNode(tools=[tavily_search])  #Tool to search online
-tools_node = ToolNode(tools=my_tools)  #Tool to search into comapny knowledge for guidelines
+my_tools = [tavily_search, search_company_knowledge] # tools to search online & into company knowledge database for policies
+tools_node = ToolNode(tools=my_tools)
 
 
 def decide_sufficient(state) -> Literal["researcher", "writer"]:
@@ -22,6 +21,7 @@ class MultiAgentGraph:
         self.research_agent = AgentFactory.create("researcher")
         self.analyzer_agent = AgentFactory.create("analyzer")
         self.writer_agent = AgentFactory.create("writer")
+        self.memory = MemorySaver()
 
         self.builder.add_node("researcher", self.research_agent.run) # this way LangGraph will call "run(state)" from the agent each time the flow reaches this node 
         self.builder.add_node("analyzer", self.analyzer_agent.run)
@@ -47,9 +47,9 @@ class MultiAgentGraph:
         self.builder.add_edge("tools", "researcher")
         self.builder.add_conditional_edges("analyzer", decide_sufficient)
         self.builder.add_edge("writer", END)
-        self.graph = self.builder.compile()
+        self.graph = self.builder.compile(checkpointer=self.memory, interrupt_before=["writer"])
  
  
-    def run(self, input_state: State):
-        return self.graph.invoke(input_state)
+    def run(self, input_state: State, config: dict = None):
+        return self.graph.invoke(input_state, config=config)
         
