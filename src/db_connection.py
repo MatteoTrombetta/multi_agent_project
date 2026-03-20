@@ -15,10 +15,6 @@ class VectorDBConnection:
     def get_db(self):
         return self._db
 
-
-
-
-
 """
 # Singleton Testing
 s1 = VectorDBConnection()

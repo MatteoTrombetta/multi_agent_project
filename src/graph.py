@@ -5,9 +5,12 @@ from src.state import State
 from langgraph.prebuilt import ToolNode, tools_condition
 from src.tools.web_search import tavily_search
 from src.agents.factory import AgentFactory
+from src.tools.company_knowledge import search_company_knowledge
 
+my_tools = [tavily_search, search_company_knowledge]
+#tools_node = ToolNode(tools=[tavily_search])  #Tool to search online
+tools_node = ToolNode(tools=my_tools)  #Tool to search into comapny knowledge for guidelines
 
-tools_node = ToolNode(tools=[tavily_search])
 
 def decide_sufficient(state) -> Literal["researcher", "writer"]:
     return "researcher" if not state["is_sufficient"] else "writer"
