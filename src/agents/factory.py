@@ -5,16 +5,15 @@ from src.agents.writer import WriterAgent
 
 class AgentFactory:
 
-    _registry = {}
+    _registry = {} #for the open/closed: add new functionalities w/o modifiying existing code
 
+    #don't need to maintain a state for the single instance (factory works as a global utility)
     @classmethod
-    def register_agent(cls, name: str, agent_class):
-        """Adds an agent (class) to the registry"""
+    def register_agent(cls, name: str, agent_class): #adds an agent (class) to the registry
         cls._registry[name] = agent_class
 
     @classmethod
-    def create(cls, name: str):
-        """Creates the new agent class and returns it"""
+    def create(cls, name: str): #Creates the new agent class and returns it
         if name not in cls._registry:
             raise ValueError(
                 f"Agent {name} not registered."

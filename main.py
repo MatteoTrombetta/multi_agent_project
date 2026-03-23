@@ -30,7 +30,7 @@ def main():
     print("\n======================================================")
     print("> THE SYSTEM REQUIRES MANUAL APPROVATION TO CONTINUE.")
     print("> Data is considered sufficient by the Analyzer.")
-    print("==================================================")
+    print("========================================================")
     print(f"\n> Analysis of the found information:\n{analyzer_reasoning}\n")
 
     check = False
@@ -66,10 +66,6 @@ def main():
         f.write(report_content)
 
     print(f"Finished! Report correctly saved in {filename}")
-
-    # print('\n', result["final_report"])
-
-    
 
 
 if __name__ == "__main__":

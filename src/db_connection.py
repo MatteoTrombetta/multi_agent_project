@@ -5,9 +5,11 @@ class VectorDBConnection:
 
     _instance = None
 
+    #overriding '__new__' in order to check in memory if 'cls._instance' already exists
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
+            #tranforms into embeddings
             cls._instance._embeddings = OpenAIEmbeddings(model='text-embedding-3-small')
             cls._instance._db = Chroma(persist_directory='./chroma_db', embedding_function=cls._instance._embeddings)
         return cls._instance

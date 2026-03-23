@@ -1,9 +1,9 @@
 from langchain_openai import ChatOpenAI
 from src.state import State
-from typing import TypedDict, Annotated
 from pydantic import BaseModel, Field
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
+#used Pydantic base model to obtain a strict JSON from the agent (thus to have a clear flag for 'is_sufficient')
 class LLMResponse(BaseModel):
     """Response structure for the LLM"""
     reasoning: str = Field(description="The reasoning behind deciding whether the provided information is enough to answer the query")
@@ -18,6 +18,7 @@ class AnalyzerAgent:
         self._llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         self._structured_llm = self._llm.with_structured_output(LLMResponse)
 
+        #CRITICAL INSTRUCTION to avoid the infinite loop
         self._agent_prompt = """You are an experienced analyzer. 
         Your goal is to look at the data provided by the researcher and decide if it's enough to answer the user's query.
         CRITICAL INSTRUCTION: You don't need a perfectly comprehensive encyclopedia. If the provided data contains at least 3-4 solid, relevant facts or recent developments that can form a good short report, you MUST output is_sufficient = True. 

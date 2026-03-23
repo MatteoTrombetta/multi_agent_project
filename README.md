@@ -1,8 +1,42 @@
-### NEW VERSION 2.0
+# VERSION 3.0
+## 🌟 Core Features
+
+* **Multi-Agent Orchestration:**
+  * **Researcher Agent:** Gathers data using web search and internal tools (Function Calling).
+  * **Analyzer Agent:** Validates data sufficiency using Structured Outputs (Pydantic).
+  * **Writer Agent:** Compiles validated data into formal Markdown reports.
+* **Enterprise Design Patterns:**
+  * **Factory & Registry Pattern:** Decouples agent instantiation (`AgentFactory`), ensuring the system is strictly Open/Closed for future agent extensions.
+  * **Singleton Pattern:** Manages the `VectorDBConnection` to ensure a single, memory-optimized instance of the embedding model and database across the application.
+* **Local RAG (Company Knowledge):** Integrates **ChromaDB** to vectorize and retrieve internal company policies using OpenAI's `text-embedding-3-small`.
+* **Human-in-the-Loop (Governance):** Utilizes LangGraph's `MemorySaver` and `interrupt_before` to pause execution, allowing for human review and approval of the data before the final report is generated.
+
+## 🛠️ Tech Stack
+* **Framework:** LangGraph, LangChain
+* **LLM:** OpenAI (`gpt-4o-mini`)
+* **Vector DB:** Chroma (Local)
+* **Tools:** Tavily Search API, Local Semantic Search
+* **Language:** Python 3.x
+
+## 🚀 Quickstart
+
+1. **Environment Setup:** Create a `.env` file with your `OPENAI_API_KEY` and `TAVILY_API_KEY`.
+2. **Data Ingestion:** Run the seeding script to populate the local Vector DB with company policies.
+   `python seed_db.py`
+3. **Run the orchestrator**
+`python main.py`
+The system will prompt you for a query, search for data, analyze it, and pause for your manual approval before generating the final Markdown report in the /reports folder.
+
+
+
+---
+
+
+# VERSION 2.0
 In this new branch we will focus on improving this project aiming to an enterprise-like structure.
 
 
-# Project outline
+## Project outline
 
 Modular, stateful Multi-Agent workflow using Python and LangGraph to automate complex research tasks. The system features a cyclic state machine where a Researcher agent dynamically calls search tools (Tavily API), an Analyzer agent uses structured outputs (Pydantic) to evaluate data sufficiency (Reflection pattern), and a Writer agent drafts the final report. This project demonstrates practical expertise in modern LLM orchestration, Function Calling, and advanced prompt engineering beyond basic RAG implementations.
 

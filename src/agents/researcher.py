@@ -31,5 +31,5 @@ class ResearcherAgent:
         print("[Researcher] I'm looking for information...")
         context = [SystemMessage(content=self._agent_prompt)] + state["messages"]
         answer = self._llm_with_tools.invoke(context)
-        return {"messages": [answer]} # Remeber: by using [] you add the answer to the list!
+        return {"messages": [answer]} #remeber: by using '[]' you add the answer to the list
 

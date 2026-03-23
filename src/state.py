@@ -1,31 +1,16 @@
-from typing import TypedDict, NotRequired, ReadOnly, Annotated
-from langchain_core.messages import BaseMessage, AnyMessage
+from typing import TypedDict, Annotated #to use reducers to add context to the metadata 
+from langchain_core.messages import AnyMessage
 from langgraph.graph.message import add_messages #does not duplicates graph
 import operator
-
-#NB: Could be also implemented with a pydantic base model.
-# pydantic is more suitable when you need to enforce data constraints
 
 class State(TypedDict):
     """Class to define the structure of the State, uses TypedDict.
     Necessary to use class Annotated in order to avoid overwriting."""
     initial_query: str
-    graph_state: str # don't know if this is needed
-    docs_found: Annotated[list[str], operator.add]
+    docs_found: Annotated[list[str], operator.add] #operator.add to concatenate and not substitute data
     raw_data: Annotated[list[dict], operator.add] #will be with smth like 'url', 'content'
-    messages: Annotated[list[AnyMessage], add_messages]
-    something: NotRequired[str] #see if needs anything else
-    final_report: str #let's keep it simple 
-    research_steps: Annotated[int, lambda x, y: x+y] # custom reducer (TO CHECK)
-    research_steps_old: int # to keep a counting of the steps performed reasearching
-    is_sufficient: bool = False #to say whether are needed new researches
+    messages: Annotated[list[AnyMessage], add_messages] #contains the chrnology of the conversations, add.messages both control and appends
+    final_report: str #to keep it simple 
+    research_steps: Annotated[int, lambda x, y: x+y] # custom reducer, could be used in case the researcher takes too many steps
+    is_sufficient: bool = False #to say whether new researches are needed
     
-'''
-Node functions follow this pattern:
-1.Receive current state as input
-2.Process data using schema-appropriate access pattern
-3.Return dictionary with keys to update
-4.LangGraph merges returned values into state
-
-The returned dictionary needs only the keys the node wants to modify - unchanged keys are preserved.
-'''
